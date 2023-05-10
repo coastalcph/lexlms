@@ -6,22 +6,22 @@
 #
 from collections import defaultdict
 import torch
-from lama.modules import build_model_by_name
-import lama.utils as utils
-from lama.utils import print_sentence_predictions, load_vocab
-import lama.options as options
+from legal_lama.modules import build_model_by_name
+import legal_lama.utils as utils
+from legal_lama.utils import print_sentence_predictions, load_vocab
+import legal_lama.options as options
 from tqdm import tqdm
 from random import shuffle
 import os
 import json
-import lama.modules.base_connector as base
+import legal_lama.modules.base_connector as base
 from pprint import pprint
 import logging.config
 import logging
 import pickle
 from multiprocessing.pool import ThreadPool
 import multiprocessing
-import lama.evaluation_metrics as metrics
+import legal_lama.evaluation_metrics as metrics
 import time, sys
 import numpy as np
 

@@ -9,8 +9,8 @@ models=(
     'nlpaueb/legal-bert-base-uncased'
     'zlucia/custom-legalbert'
     'pile-of-law/legalbert-large-1.7M-2'
-    'lexlms/roberta-base-cased'
-    'lexlms/roberta-large-cased'
+    'lexlms/roberta-base'
+    'lexlms/roberta-large'
     )
 for model in "${models[@]}"
 do
