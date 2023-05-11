@@ -304,7 +304,7 @@ def main(args, model, tokenizer, config, data):
             labels_probabilities = dict()
             for length, labels in labels_metadata.items():
                 new_mask = " ".join(['<mask>'] * length)
-                new_sample = sample['text'][0].replace('<mask>', new_mask)
+                new_sample = sample['text'].replace('<mask>', new_mask)
                 sentence_masked = new_sample.replace("<mask>", tokenizer.mask_token)
                 inputs = tokenizer(sentence_masked, return_tensors="pt", padding=True, truncation=True, max_length=args.max_sentence_length)
 
