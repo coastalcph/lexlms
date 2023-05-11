@@ -19,6 +19,7 @@ from transformers import (
     HfArgumentParser,
     set_seed
 )
+from datasets import load_dataset
 
 set_seed(42)
 
@@ -131,18 +132,13 @@ def run_experiments(
 
         args = argparse.Namespace(**PARAMETERS)
 
-        # see if file exists
-        try:
-            data = load_file(args.dataset_filename)
-        except Exception as e:
-            print("Relation {} excluded.".format(relation["relation"]))
-            print("Exception: {}".format(e))
-            continue
+        data = load_dataset("lexlms/legal_lama", relation['relation'])
+        data = data['test']
 
         if model is None:
             model, tokenizer, config = build_model_by_name(model_args)
 
-        Precision1 = run_evaluation(args, model, tokenizer, config)
+        Precision1 = run_evaluation(args, model, tokenizer, config, data)
         print("P@1 : {}".format(Precision1), flush=True)
         all_Precision1.append(Precision1)
 

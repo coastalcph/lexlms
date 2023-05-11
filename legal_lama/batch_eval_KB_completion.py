@@ -98,9 +98,9 @@ def batchify(data, batch_size):
 
     # sort to group togheter sentences with similar length
     for sample in sorted(
-        data, key=lambda k: len(" ".join(k["masked_sentences"]).split())
+        data, key=lambda k: len(" ".join(k["text"]).split())
     ):
-        masked_sentences = sample["masked_sentences"]
+        masked_sentences = sample["text"]
         current_samples_batch.append(sample)
         current_sentences_batches.append(masked_sentences)
         c += 1
@@ -153,11 +153,11 @@ def lowercase_samples(samples, use_negated_probes=False):
         sample["obj_label"] = sample["obj_label"].lower()
         sample["sub_label"] = sample["sub_label"].lower()
         lower_masked_sentences = []
-        for sentence in sample["masked_sentences"]:
+        for sentence in sample["text"]:
             sentence = sentence.lower()
             sentence = sentence.replace(base.MASK.lower(), base.MASK)
             lower_masked_sentences.append(sentence)
-        sample["masked_sentences"] = lower_masked_sentences
+        sample["text"] = lower_masked_sentences
 
         if "negated" in sample and use_negated_probes:
             for sentence in sample["negated"]:
@@ -176,21 +176,16 @@ def filter_samples(model, tokenizer, samples, vocab_subset, max_sentence_length,
     samples_exluded = 0
     for sample in samples:
         excluded = False
-        if "obj_label" in sample:
-            sample['obj_label'] = sample['obj_label'].lower()
+        if "label" in sample:
+            sample['label'] = sample['label'].lower()
 
-            if sample["masked_sentences"][0].count('<mask>') > 1:
+            if sample["text"][0].count('<mask>') > 1:
                 continue
 
-            if len(tokenizer(sample["masked_sentences"][0])['input_ids']) > 512:
+            if len(tokenizer(sample["text"][0])['input_ids']) > 512:
                 continue
 
-            obj_label_ids = tokenizer.encode(sample["obj_label"], add_special_tokens=False)
-            # obj_label_ids = model.get_id(sample["obj_label"])
-            # if len(obj_label_ids) > 1:
-            #     # reformat sample using multiple masks
-            #     new_mask = " ".join(['<mask>'] * len(obj_label_ids))
-            #     sample['masked_sentences'][0] = sample['masked_sentences'][0].replace('<mask>', new_mask)
+            obj_label_ids = tokenizer.encode(sample["label"], add_special_tokens=False)
 
             if obj_label_ids:
                 recostructed_word = tokenizer.decode(obj_label_ids).strip()
@@ -199,7 +194,7 @@ def filter_samples(model, tokenizer, samples, vocab_subset, max_sentence_length,
 
             excluded = False
             if not template or len(template) == 0:
-                masked_sentences = sample["masked_sentences"]
+                masked_sentences = sample["text"]
                 text = " ".join(masked_sentences)
                 if len(text.split()) > max_sentence_length:
                     msg += "\tEXCLUDED for exeeding max sentence length: {}\n".format(
@@ -217,16 +212,6 @@ def filter_samples(model, tokenizer, samples, vocab_subset, max_sentence_length,
                 )
                 samples_exluded += 1
 
-            # elif not recostructed_word or recostructed_word != sample["obj_label"]:
-            #     import pdb; pdb.set_trace()
-            #     msg += "\tEXCLUDED recostructred object label {} not in model vocabulary\n".format(
-            #         sample["obj_label"]
-            #     )
-            #     samples_exluded += 1
-
-            # elif vocab_subset is not None and sample['obj_label'] not in vocab_subset:
-            #   msg += "\tEXCLUDED object label {} not in vocab subset\n".format(sample['obj_label'])
-            #   samples_exluded+=1
             elif "judgments" in sample:
                 # only for Google-RE
                 num_no = 0
@@ -252,10 +237,9 @@ def filter_samples(model, tokenizer, samples, vocab_subset, max_sentence_length,
     return new_samples, msg
 
 
-def main(args, model, tokenizer, config):
+def main(args, model, tokenizer, config, data):
 
     msg = ""
-
     model_name = config._name_or_path
 
     # initialize logging
@@ -289,8 +273,6 @@ def main(args, model, tokenizer, config):
     stats_per_label = defaultdict(lambda: defaultdict(list))
     examples_scores = list()
 
-    data = load_file(args.dataset_filename)
-
     print(len(data))
 
     if args.lowercase:
@@ -305,7 +287,7 @@ def main(args, model, tokenizer, config):
 
     if args.vocab_constraint:  # Constrain on the set of possible labels
         labels_metadata = defaultdict(list)
-        vocab_subset = {d['obj_label'].lower() for d in data}
+        vocab_subset = {d['label'].lower() for d in data}
         for label in vocab_subset:
             indices = tokenizer(label, add_special_tokens=False)['input_ids']
             length = len(indices)
@@ -346,19 +328,13 @@ def main(args, model, tokenizer, config):
         samples_b = samples_batches[i]
         sentences_b = sentences_batches[i]
         for sample, sentence in zip(samples_b, sentences_b):
-            real_label = sample['obj_label']
+            real_label = sample['label']
+            top_label = sample['category']
+            import pdb; pdb.set_trace()
             labels_probabilities = dict()
-            if 'canadian_article' in sample:
-                top_label = sample['canadian_article']
-            elif 'legal_topic' in sample:
-                top_label = sample['legal_topic']
-            elif 'echr_article' in sample:
-                top_label = sample['echr_article']
-            else:
-                top_label = sample['obj_label']
             for length, labels in labels_metadata.items():
                 new_mask = " ".join(['<mask>'] * length)
-                new_sample = sample['masked_sentences'][0].replace('<mask>', new_mask)
+                new_sample = sample['text'][0].replace('<mask>', new_mask)
                 sentence_masked = new_sample.replace("<mask>", tokenizer.mask_token)
                 inputs = tokenizer(sentence_masked, return_tensors="pt", padding=True, truncation=True, max_length=args.max_sentence_length)
 
