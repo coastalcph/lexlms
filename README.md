@@ -70,7 +70,34 @@ Additional corpora not considered for pre-training, since they do not represent 
 
 ## LegalLAMA: Legal Language Model Analysis
 
-### TODO
+LegalLAMA is a diverse probing benchmark suite comprising 8 sub-tasks that aims to assess the acquaintance of legal knowledge that PLMs acquired in pre-training.
+
+### Dataset Specifications
+
+| Corpus                               | Corpus alias         | Examples  | Avg. Tokens | Labels |
+|--------------------------------------|----------------------|-----------|-------------|--------|
+| Criminal Code Sections (Canada)      | `canadian_sections`  | 321       | 72          | 144    |
+| Legal Terminology (EU)               | `cjeu_term`          | 2,127     | 164         | 23     |
+| Contractual Section Titles (US)      | `contract_sections`  | 1,527     | 85          | 20     |
+| Contract Types (US)                  | `contract_types`     | 1,089     | 150         | 15     |
+| ECHR Articles (CoE)                  | `ecthr_articles`     | 5,072     | 69          | 13     |
+| Legal Terminology (CoE)              | `ecthr_terms`        | 6,803     | 97          | 250    |
+| Crime Charges (US)                   | `us_crimes`          | 4,518     | 118         | 59     |
+| Legal Terminology (US)               | `us_terms`           | 5,829     | 308         | 7      |
+
+### Evaluating PLMs
+
+We considered the following PLMs in our experimentations;
+- RoBERTa
+- LegalBERT
+- CaseLawBERT
+- PoL-BERT
+- LexLM
+
+To evaluate these PLMs on LegalLAMA, run the following script:
+```
+sh scripts_lama/run_lama.sh
+```
 
 
 ## LexLMs - Pre-trained Language Models (PLMs)
