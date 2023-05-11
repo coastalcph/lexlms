@@ -179,10 +179,10 @@ def filter_samples(model, tokenizer, samples, vocab_subset, max_sentence_length,
         if "label" in sample:
             sample['label'] = sample['label'].lower()
 
-            if sample["text"][0].count('<mask>') > 1:
+            if sample["text"].count('<mask>') > 1:
                 continue
 
-            if len(tokenizer(sample["text"][0])['input_ids']) > 512:
+            if len(tokenizer(sample["text"])['input_ids']) > max_sentence_length:
                 continue
 
             obj_label_ids = tokenizer.encode(sample["label"], add_special_tokens=False)
@@ -192,40 +192,11 @@ def filter_samples(model, tokenizer, samples, vocab_subset, max_sentence_length,
             else:
                 recostructed_word = None
 
-            excluded = False
-            if not template or len(template) == 0:
-                masked_sentences = sample["text"]
-                text = " ".join(masked_sentences)
-                if len(text.split()) > max_sentence_length:
-                    msg += "\tEXCLUDED for exeeding max sentence length: {}\n".format(
-                        masked_sentences
-                    )
-                    samples_exluded += 1
-                    excluded = True
-
-
-            if excluded:
-                pass
-            elif obj_label_ids is None:
+            if obj_label_ids is None:
                 msg += "\tEXCLUDED object label {} not in model vocabulary\n".format(
                     sample["obj_label"]
                 )
                 samples_exluded += 1
-
-            elif "judgments" in sample:
-                # only for Google-RE
-                num_no = 0
-                num_yes = 0
-                for x in sample["judgments"]:
-                    if x["judgment"] == "yes":
-                        num_yes += 1
-                    else:
-                        num_no += 1
-                if num_no > num_yes:
-                    # SKIP NEGATIVE EVIDENCE
-                    pass
-                else:
-                    new_samples.append(sample)
             else:
                 new_samples.append(sample)
         else:
@@ -330,7 +301,6 @@ def main(args, model, tokenizer, config, data):
         for sample, sentence in zip(samples_b, sentences_b):
             real_label = sample['label']
             top_label = sample['category']
-            import pdb; pdb.set_trace()
             labels_probabilities = dict()
             for length, labels in labels_metadata.items():
                 new_mask = " ".join(['<mask>'] * length)
