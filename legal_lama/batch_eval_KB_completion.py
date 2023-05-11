@@ -300,7 +300,7 @@ def main(args, model, tokenizer, config, data):
         sentences_b = sentences_batches[i]
         for sample, sentence in zip(samples_b, sentences_b):
             real_label = sample['label']
-            top_label = sample['category']
+            top_label = sample['category'].lower()
             labels_probabilities = dict()
             for length, labels in labels_metadata.items():
                 new_mask = " ".join(['<mask>'] * length)
