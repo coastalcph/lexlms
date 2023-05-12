@@ -7,7 +7,7 @@
 
 [*Ilias Chalkidis\*, Nicolas Garneau\*, Catalina E.C. Goanta, Daniel Martin Katz, and Anders Søgaard.*
 *LeXFiles and LegalLAMA: Facilitating English Multinational Legal Language Model Development.*
-*2022. In the Proceedings of the 61th Annual Meeting of the Association for Computational Linguistics. Toronto, Canada.*](https://aclanthology.org/xxx/)
+*2022. In the Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics. Toronto, Canada.*](https://aclanthology.org/xxx/)
 ```
 @inproceedings{chalkidis-garneau-etal-2023-lexlms,
     title = {{LeXFiles and LegalLAMA: Facilitating English Multinational Legal Language Model Development}},
