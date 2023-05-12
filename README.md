@@ -90,7 +90,7 @@ dataset = load_dataset('lexlms/legal_lama', 'contract_sections')
 | :eu: ECHR Articles (CoE)                 | `ecthr_articles`     | 5,072     | 69          | 13     |
 | :eu: Legal Terminology (CoE)             | `ecthr_terms`        | 6,803     | 97          | 250    |
 | :us: Crime Charges (US)                  | `us_crimes`          | 4,518     | 118         | 59     |
-| :us: Legal Terminology (US)              | `us_terms`           | 5,829     | 308         | 7      |
+| :us: Legal Terminology (US)              | `us_terms`           | 5,829     | 308         | 92     |
 
 ### Evaluating PLMs
 
