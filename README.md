@@ -16,8 +16,8 @@
               Goanta, Catalina and 
               Katz, Daniel Martin and 
               Søgaard, Anders",
-    booktitle = "Proceedings of the 61h Annual Meeting of the Association for Computational Linguistics",
-    month = june,
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics",
+    month = july,
     year = "2023",
     address = "Toronto, Canada",
     publisher = "Association for Computational Linguistics",
@@ -74,16 +74,16 @@ LegalLAMA is a diverse probing benchmark suite comprising 8 sub-tasks that aims 
 
 ### Dataset Specifications
 
-| Corpus                               | Corpus alias         | Examples  | Avg. Tokens | Labels |
-|--------------------------------------|----------------------|-----------|-------------|--------|
-| Criminal Code Sections (Canada)      | `canadian_sections`  | 321       | 72          | 144    |
-| Legal Terminology (EU)               | `cjeu_term`          | 2,127     | 164         | 23     |
-| Contractual Section Titles (US)      | `contract_sections`  | 1,527     | 85          | 20     |
-| Contract Types (US)                  | `contract_types`     | 1,089     | 150         | 15     |
-| ECHR Articles (CoE)                  | `ecthr_articles`     | 5,072     | 69          | 13     |
-| Legal Terminology (CoE)              | `ecthr_terms`        | 6,803     | 97          | 250    |
-| Crime Charges (US)                   | `us_crimes`          | 4,518     | 118         | 59     |
-| Legal Terminology (US)               | `us_terms`           | 5,829     | 308         | 7      |
+| Corpus                                   | Corpus alias         | Examples  | Avg. Tokens | Labels |
+|------------------------------------------|----------------------|-----------|-------------|--------|
+| :canada: Criminal Code Sections (Canada) | `canadian_sections`  | 321       | 72          | 144    |
+| :eu: Legal Terminology (EU)              | `cjeu_term`          | 2,127     | 164         | 23     |
+| :us: Contractual Section Titles (US)     | `contract_sections`  | 1,527     | 85          | 20     |
+| :us: Contract Types (US)                 | `contract_types`     | 1,089     | 150         | 15     |
+| :eu: ECHR Articles (CoE)                 | `ecthr_articles`     | 5,072     | 69          | 13     |
+| :eu: Legal Terminology (CoE)             | `ecthr_terms`        | 6,803     | 97          | 250    |
+| :us: Crime Charges (US)                  | `us_crimes`          | 4,518     | 118         | 59     |
+| :us: Legal Terminology (US)              | `us_terms`           | 5,829     | 308         | 7      |
 
 ### Evaluating PLMs
 
@@ -104,10 +104,10 @@ sh scripts_lama/run_lama.sh
 
 We release 2 new legal-oriented PLMs, dubbed LexLMs, warm-started from the RoBERTa models, and further pre-trained on the "LeXFiles" corpuss for 1M additional steps.
 
-| Model Name       | Alias                                                                 | Layers | Hidden Units | Attention Heads | Parameters |
-|------------------|-----------------------------------------------------------------------|--------|--------------|-----------------|------------|
-| Lex-LM (Base)   | [`lexlms/roberta-base`](https://huggingface.co/lexlms/roberta-base)   | 12     | 768    | 12              | 123.9M     |
-| Lex-LM (Large)  | [`lexlms/roberta-large`](https://huggingface.co/lexlms/roberta-large) |   24   | 1024   | 16              | 354.0M     |
+| Model Name       | Alias                                                                     | Layers | Hidden Units | Attention Heads | Parameters |
+|------------------|---------------------------------------------------------------------------|--------|--------------|-----------------|------------|
+| Lex-LM (Base)   | [`lexlms/legal-roberta-base`](https://huggingface.co/lexlms/legal-roberta-base) | 12     | 768    | 12              | 123.9M     |
+| Lex-LM (Large)  | [`lexlms/legal-roberta-large`](https://huggingface.co/lexlms/legal-roberta-large)     |   24   | 1024   | 16              | 354.0M     |
 
 ### Usage
 
@@ -116,8 +116,8 @@ You can load any model with the standard HF AutoModel code.
 ```python 
 from transformers import AutoModel, AutoTokenizer
 
-model = AutoModel.from_pretrained("lexlms/roberta-base")
-tokenizer = AutoTokenizer.from_pretrained("lexlms/roberta-base")
+model = AutoModel.from_pretrained("lexlms/legal-roberta-base")
+tokenizer = AutoTokenizer.from_pretrained("lexlms/legal-roberta-base")
 ```
 
 
@@ -160,4 +160,4 @@ sh lex-glue/scripts/run_eurlex.sh
 PLM and other training specifications can be modified in the script:
 
 ```
-MODEL_PATH='lexlms/roberta-large'
+MODEL_PATH='lexlms/legal-roberta-large'
