@@ -34,7 +34,7 @@ The corpus contains approx. 19 billion tokens. In comparison, the "Pile of Law" 
 
 ```python
 from datasets import load_dataset
-dataset = load_dataset('lexlms/lexfiles', 'eu-legislation')
+dataset = load_dataset('lexlms/lex_files', 'eu-legislation')
 ```
 
 
@@ -55,7 +55,7 @@ dataset = load_dataset('lexlms/lexfiles', 'eu-legislation')
 | :us: U.S. Court Decisions [1]     | `court-listener`     | 4.6M      | 11.4B  | 59.2%  | 34.7%          | 17.5%          |
 | :us: U.S. Legislation             | `us-legislation`     | 518       | 1.4B   | 7.4%   | 12.3%          | 11.5%          |
 | :us: U.S. Contracts               | `us-contracts`       | 622K      | 5.3B   | 27.3%  | 23.6%          | 15.0%          |
-| Total                             | `lexlms/lexfiles`    | 5.8M      | 18.8B  | 100%   | 100%           | 100%           |
+| Total                             | `lexlms/lex_files`    | 5.8M      | 18.8B  | 100%   | 100%           | 100%           |
 
 [1] We consider only U.S. Court Decisions from 1965 onwards (cf. post Civil Rights Act), as a hard threshold for cases relying on severely out-dated and in many cases harmful law standards. The rest of the corpora include more recent documents.
 
@@ -71,6 +71,13 @@ Additional corpora not considered for pre-training, since they do not represent 
 ## LegalLAMA: Legal Language Model Analysis
 
 LegalLAMA is a diverse probing benchmark suite comprising 8 sub-tasks that aims to assess the acquaintance of legal knowledge that PLMs acquired in pre-training.
+
+### Usage
+
+```python
+from datasets import load_dataset
+dataset = load_dataset('lexlms/legal_lama', 'contract_sections')
+```
 
 ### Dataset Specifications
 
