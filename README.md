@@ -7,21 +7,22 @@
 
 [*Ilias Chalkidis\*, Nicolas Garneau\*, Catalina E.C. Goanta, Daniel Martin Katz, and Anders Søgaard.*
 *LeXFiles and LegalLAMA: Facilitating English Multinational Legal Language Model Development.*
-*2022. In the Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics. Toronto, Canada.*](https://arxiv.org/abs/2305.07507)
+*2022. In the Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics. Toronto, Canada.*](https://aclanthology.org/2023.acl-long.865/)
 ```
-@inproceedings{chalkidis-garneau-etal-2023-lexlms,
-    title = {{LeXFiles and LegalLAMA: Facilitating English Multinational Legal Language Model Development}},
-    author = "Chalkidis*, Ilias and 
-              Garneau*, Nicolas and
-              Goanta, Catalina and 
-              Katz, Daniel Martin and 
-              Søgaard, Anders",
-    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics",
-    month = july,
+@inproceedings{chalkidis-etal-2023-lexfiles,
+    title = "{L}e{XF}iles and {L}egal{LAMA}: Facilitating {E}nglish Multinational Legal Language Model Development",
+    author = "Chalkidis, Ilias  and
+      Garneau, Nicolas  and
+      Goanta, Catalina  and
+      Katz, Daniel  and
+      S{\o}gaard, Anders",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
     year = "2023",
     address = "Toronto, Canada",
     publisher = "Association for Computational Linguistics",
-    url = "https://arxiv.org/abs/2305.07507",
+    url = "https://aclanthology.org/2023.acl-long.865",
+    pages = "15513--15535"
 }
 ```
 
@@ -34,7 +35,7 @@ The corpus contains approx. 19 billion tokens. In comparison, the "Pile of Law" 
 
 ```python
 from datasets import load_dataset
-dataset = load_dataset('lexlms/lex_files', 'eu-legislation')
+dataset = load_dataset('lexlms/lex_files', name='eu-legislation')
 ```
 
 
@@ -52,7 +53,7 @@ dataset = load_dataset('lexlms/lex_files', 'eu-legislation')
 | :india: Indian Court Decisions    | `indian-court-cases` | 34.8K     | 111.6M | 0.6%   | 3.4%           | 6.9%           |
 | :canada: Canadian Legislation     | `canada-legislation` | 6K        | 33.5M  | 0.2%   | 1.9%           | 5.5%           |
 | :canada: Canadian Court Decisions | `canadian_decisions` | 11.3K     | 33.1M  | 0.2%   | 1.8%           | 5.4%           |
-| :us: U.S. Court Decisions [1]     | `court-listener`     | 4.6M      | 11.4B  | 59.2%  | 34.7%          | 17.5%          |
+| :us: U.S. Court Decisions [1]     | `us-court-cases`     | 4.6M      | 11.4B  | 59.2%  | 34.7%          | 17.5%          |
 | :us: U.S. Legislation             | `us-legislation`     | 518       | 1.4B   | 7.4%   | 12.3%          | 11.5%          |
 | :us: U.S. Contracts               | `us-contracts`       | 622K      | 5.3B   | 27.3%  | 23.6%          | 15.0%          |
 | Total                             | `lexlms/lex_files`    | 5.8M      | 18.8B  | 100%   | 100%           | 100%           |
@@ -76,7 +77,7 @@ LegalLAMA is a diverse probing benchmark suite comprising 8 sub-tasks that aims 
 
 ```python
 from datasets import load_dataset
-dataset = load_dataset('lexlms/legal_lama', 'contract_sections')
+dataset = load_dataset('lexlms/legal_lama', name='contract_sections')
 ```
 
 ### Dataset Specifications
